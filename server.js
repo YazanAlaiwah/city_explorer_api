@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 'use stirct';
 require('dotenv').config();
 const express = require('express');
@@ -32,9 +33,9 @@ server.get('/weather', (req, res) => {
 
 function Location(query, data) {
   (this.search_query = query),
-    (this.formateed_query = data[0].display_name),
-    (this.latitude = data[0].lat),
-    (this.longitude = data[0].lon);
+  (this.formateed_query = data[0].display_name),
+  (this.latitude = data[0].lat),
+  (this.longitude = data[0].lon);
 }
 
 const mounths = {
@@ -57,7 +58,7 @@ function Weather(data) {
   let newDate = data.datetime.split('-');
   newDate[1] = mounths[newDate[1]];
   (this.description = data.weather.description),
-    (this.time = newDate.join('-'));
+  (this.time = newDate.join('-'));
 }
 
 server.get('*', (req, res) => res.status(404).send('NOT FOUND'));
