@@ -11,7 +11,7 @@ server.use(cors());
 
 server.get('/', (req, res) =>
   res.send(
-    'HELLO to know the location type /location?city=*-name of the city-* and for weather type / weather in the browser bar THANK YOU'
+    'HELLO to know the location type /location?city=*-name of the city-* and for weather type /weather/search_query= *name of the location*  and for the Hikeing type /trails/search_query= *name of the location* in the browser bar THANK YOU'
   )
 );
 
