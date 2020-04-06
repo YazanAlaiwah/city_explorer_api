@@ -53,7 +53,7 @@ server.get('/trails', (req, res) => {
           `https://www.hikingproject.com/data/get-trails?lat=${location.lat}&lon=${location.lon}&maxDistance=10&key=${key}`
         )
         .then((data) =>
-          res.status(200).send(data.body.trails.map((obj) => new Hike(obj)))
+          res.status(200).send(data.body.trails.map((obj) => new Hike(obj)).slice(0,10))
         );
     });
 });
