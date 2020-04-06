@@ -39,3 +39,43 @@ Finish time: 2.00pm
 
 Actual time needed to complete: 00.40 min
 
+## APIs
+Number and name of feature: 1. Data formatting:
+
+Estimate of time needed to complete: 0.30 min   
+
+Start time: 1.00pm
+
+Finish time: 1.10pm
+
+Actual time needed to complete: 0.10 min
+
+Number and name of feature: 2. Locations
+
+Estimate of time needed to complete: 0.30 min   
+
+Start time: 1.10pm
+
+Finish time: 1.40pm
+
+Actual time needed to complete: 0.30 min
+
+Number and name of feature: 3. Weather:
+
+Estimate of time needed to complete: 0.10 min   
+
+Start time: 1.40pm
+
+Finish time: 1.50pm
+
+Actual time needed to complete: 0.10 min
+
+Number and name of feature: 4. Trails
+
+Estimate of time needed to complete: 0.30 min   
+
+Start time: 2.00pm
+
+Finish time: 3.00pm
+
+Actual time needed to complete: 1 hour
