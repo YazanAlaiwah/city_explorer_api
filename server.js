@@ -16,15 +16,13 @@ server.get('/', (req, res) =>
   )
 );
 
-
 server.get('/location', (req, res) => {
   const key = process.env.GEOCODE_API_KEY;
-  let sql = 'SELECT * FROM location WHERE city LIKE $1';
+  let sql = 'SELECT * FROM location WHERE search_query LIKE $1';
   let search = req.query.city;
   client
     .query(sql, [search])
     .then((resulte) => {
-      // console.log(resulte.rows);
       if (resulte.rows.length) {
         res.status(200).send(resulte.rows[0]);
       } else {
@@ -35,14 +33,14 @@ server.get('/location', (req, res) => {
           .then((data) => {
             let resulte = new Location(search, data.body);
             sql =
-              'INSERT INTO location (city,formatted_query,latitude,longitude) VALUES ($1,$2,$3,$4)';
+              'INSERT INTO location (search_query,formatted_query,latitude,longitude) VALUES ($1,$2,$3,$4)';
             let safeValues = [
               resulte.search_query,
-              resulte.search_query,
+              resulte.formateed_query,
               resulte.latitude,
               resulte.longitude,
             ];
-            client.query(sql,safeValues)
+            client.query(sql, safeValues);
             res.status(200).send(resulte);
           });
       }
@@ -57,9 +55,9 @@ server.get('/weather', (req, res) => {
     .get(
       `https://api.weatherbit.io/v2.0/forecast/daily?city=${search}&key=${key}`
     )
-    .then((data) =>
-      res.status(200).send(data.body.data.map((obj) => new Weather(obj)))
-    );
+    .then((data) => {
+      res.status(200).send(data.body.data.map((obj) => new Weather(obj)));
+    });
 });
 
 server.get('/trails', (req, res) => {
@@ -75,13 +73,14 @@ server.get('/trails', (req, res) => {
       let location = data.body[0];
       superagent
         .get(
-          `https://www.hikingproject.com/data/get-trails?lat=${location.lat}&lon=${location.lon}&maxDistance=10&key=${key}`
+          `https://www.hikingproject.com/data/get-trails?lat=${location.lat}&lon=${location.lon}&maxDistance=200&key=${key}`
         )
-        .then((data) =>
+        .then((data) => {
+          console.log(data.body.trails, 'dffffffffffffffffff');
           res
             .status(200)
-            .send(data.body.trails.map((obj) => new Hike(obj)).slice(0, 10))
-        );
+            .send(data.body.trails.map((obj) => new Hike(obj)).slice(0, 10));
+        });
     });
 });
 
