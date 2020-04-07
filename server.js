@@ -5,8 +5,9 @@ const express = require('express');
 const cors = require('cors');
 const server = express();
 const superagent = require('superagent');
+const pg = require('pg');
 const PORT = process.env.PORT || 3000;
-
+const client = new pg.Client(process.env.DATABASE_URL);
 server.use(cors());
 
 server.get('/', (req, res) =>
@@ -15,14 +16,46 @@ server.get('/', (req, res) =>
   )
 );
 
+// server.get('/location', (req, res) => {
+//   let search = req.query.city;
+//   const key = process.env.GEOCODE_API_KEY;
+//   superagent
+//     .get(
+//       `https://eu1.locationiq.com/v1/search.php?key=${key}&q=${search}&format=json`
+//     )
+//     .then((data) => res.status(200).send(new Location(search, data.body)));
+// });
 server.get('/location', (req, res) => {
-  let search = req.query.city;
   const key = process.env.GEOCODE_API_KEY;
-  superagent
-    .get(
-      `https://eu1.locationiq.com/v1/search.php?key=${key}&q=${search}&format=json`
-    )
-    .then((data) => res.status(200).send(new Location(search, data.body)));
+  let sql = 'SELECT * FROM location WHERE city LIKE $1';
+  let search = req.query.city;
+  client
+    .query(sql, [search])
+    .then((resulte) => {
+      // console.log(resulte.rows);
+      if (resulte.rows.length) {
+        res.status(200).send(resulte.rows[0]);
+      } else {
+        superagent
+          .get(
+            `https://eu1.locationiq.com/v1/search.php?key=${key}&q=${search}&format=json`
+          )
+          .then((data) => {
+            let resulte = new Location(search, data.body);
+            sql =
+              'INSERT INTO location (city,formatted_query,latitude,longitude) VALUES ($1,$2,$3,$4)';
+            let safeValues = [
+              resulte.search_query,
+              resulte.search_query,
+              resulte.latitude,
+              resulte.longitude,
+            ];
+            client.query(sql,safeValues)
+            res.status(200).send(resulte);
+          });
+      }
+    })
+    .catch((err) => console.log(err));
 });
 
 server.get('/weather', (req, res) => {
@@ -53,7 +86,9 @@ server.get('/trails', (req, res) => {
           `https://www.hikingproject.com/data/get-trails?lat=${location.lat}&lon=${location.lon}&maxDistance=10&key=${key}`
         )
         .then((data) =>
-          res.status(200).send(data.body.trails.map((obj) => new Hike(obj)).slice(0,10))
+          res
+            .status(200)
+            .send(data.body.trails.map((obj) => new Hike(obj)).slice(0, 10))
         );
     });
 });
@@ -104,4 +139,6 @@ server.get('*', (req, res) => res.status(404).send('NOT FOUND'));
 
 server.use((err, req, res) => res.status(500).send(err));
 
-server.listen(PORT, () => console.log(`listening on port: ${PORT}`));
+client.connect().then(() => {
+  server.listen(PORT, () => console.log(`listening on ${PORT}`));
+});
