@@ -16,15 +16,7 @@ server.get('/', (req, res) =>
   )
 );
 
-// server.get('/location', (req, res) => {
-//   let search = req.query.city;
-//   const key = process.env.GEOCODE_API_KEY;
-//   superagent
-//     .get(
-//       `https://eu1.locationiq.com/v1/search.php?key=${key}&q=${search}&format=json`
-//     )
-//     .then((data) => res.status(200).send(new Location(search, data.body)));
-// });
+
 server.get('/location', (req, res) => {
   const key = process.env.GEOCODE_API_KEY;
   let sql = 'SELECT * FROM location WHERE city LIKE $1';
