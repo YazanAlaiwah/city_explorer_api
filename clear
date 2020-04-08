@@ -1,0 +1,17 @@
+ id | search_query |                                    formatted_query                                     |  latitude   |  longitude   
+----+--------------+----------------------------------------------------------------------------------------+-------------+--------------
+  1 | seattle      | seattle                                                                                | 47.6038321  | -122.3300624
+  2 | amman        | amman                                                                                  | 31.9515694  | 35.9239625
+  3 | jordan       | jordan                                                                                 | 31.1667049  | 36.941628
+  4 | usa          | United States                                                                          | 39.7837304  | -100.4458825
+  5 | brazil       | Brazil                                                                                 | -10.3333333 | -53.2
+  6 | am           | Armenia                                                                                | 40.7696272  | 44.6736646
+  7 | china        | China                                                                                  | 35.000074   | 104.999927
+  8 | sudia        | Sweden                                                                                 | 59.6749712  | 14.5208584
+  9 | uae          | Ukraine                                                                                | 49.4871968  | 31.2718321
+ 10 | qatar        | Qatar                                                                                  | 25.3336984  | 51.2295295
+ 11 | italy        | Italy                                                                                  | 42.6384261  | 12.674297
+ 12 | franch       | Franch, Bellavista, San Francisco de Paula, San Miguel del Padrón, Havana, 14000, Cuba | 23.065601   | -82.2983243
+ 13 | spain        | Spain                                                                                  | 39.3262345  | -4.8380649
+(13 rows)
+
