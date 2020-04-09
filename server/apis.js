@@ -3,7 +3,7 @@ const superagent = require('superagent');
 const Constructor = require('./Cobject');
 const DB = require('./DB');
 let API = {};
-var x = [];
+// var x = [];
 API.home = function (req, res) {
   res.send(x);
 };
@@ -31,20 +31,22 @@ API.location = function (req, res) {
 };
 
 API.weather = function (req, res) {
+  let x = [];
   x.push('jdslkfjdks');
-  let search = req.query.search_query;
-  let key = process.env.WEATHER_API_KEY;
-  superagent
-    .get(
-      `https://api.weatherbit.io/v2.0/forecast/daily?city=${search}&key=${key}`
-    )
-    .then((data) => {
-      if (Object.keys(data.body).length) {
-        res
-          .status(200)
-          .send(data.body.data.map((obj) => new Constructor.Weather(obj)));
-      }
-    });
+  res.send(x);
+  // let search = req.query.search_query;
+  // let key = process.env.WEATHER_API_KEY;
+  // superagent
+  //   .get(
+  //     `https://api.weatherbit.io/v2.0/forecast/daily?city=${search}&key=${key}`
+  //   )
+  //   .then((data) => {
+  //     if (Object.keys(data.body).length) {
+  //       res
+  //         .status(200)
+  //         .send(data.body.data.map((obj) => new Constructor.Weather(obj)));
+  //     }
+  //   });
 };
 
 API.hike = function (req, res) {
