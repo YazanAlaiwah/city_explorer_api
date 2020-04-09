@@ -3,11 +3,9 @@ const superagent = require('superagent');
 const Constructor = require('./Cobject');
 const DB = require('./DB');
 let API = {};
-
+var x = [];
 API.home = function (req, res) {
-  res.send(
-    'HELLO to know the location type /location?city=*-name of the city-* and for weather type /weather/search_query= *name of the location*  and for the Hikeing type /trails/search_query= *name of the location* in the browser bar THANK YOU'
-  );
+  res.send(x);
 };
 
 API.location = function (req, res) {
@@ -33,6 +31,7 @@ API.location = function (req, res) {
 };
 
 API.weather = function (req, res) {
+  x.push('jdslkfjdks');
   let search = req.query.search_query;
   let key = process.env.WEATHER_API_KEY;
   superagent
